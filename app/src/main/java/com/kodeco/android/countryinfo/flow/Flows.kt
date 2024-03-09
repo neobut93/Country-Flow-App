@@ -29,4 +29,13 @@ object Flows {
     fun tapBack() {
         _backFlow.value += 1
     }
+
+    init {
+        GlobalScope.launch {
+            while (true) {
+                delay(1_000L)
+                _counterFlow.value += 1
+            }
+        }
+    }
 }

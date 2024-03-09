@@ -32,13 +32,11 @@ fun CountryInfoList(
     onRefreshClick: () -> Unit, // TODO: Utilize this onRefreshClick
 ) {
     var selectedCountry: Country? by remember { mutableStateOf(null) }
-    val tapCount = Flows.tapFlow.collectAsState(initial = 0)
-    val backCount = Flows.backFlow.collectAsState(initial = 0)
+    val tapCount by Flows.tapFlow.collectAsState()
+    val backCount by Flows.backFlow.collectAsState()
 
     Column(
     ) {
-        // TODO: Implement the Row composable here that contains the
-        //  the tap/back flow data and the refresh button.
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -46,11 +44,11 @@ fun CountryInfoList(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Taps: ${tapCount.value}", fontSize = 17.sp)
+            Text(text = "Taps: $tapCount", fontSize = 17.sp)
             Button(onClick = { /*TODO*/ }) {
                 Text(text = "Refresh")
             }
-            Text(text = "Back: ${backCount.value}", fontSize = 17.sp)
+            Text(text = "Back: $backCount", fontSize = 17.sp)
         }
 
         selectedCountry?.let { country ->
