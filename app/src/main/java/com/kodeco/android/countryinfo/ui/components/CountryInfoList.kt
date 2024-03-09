@@ -75,7 +75,7 @@ fun CountryInfoList(
                 items(countries) { country ->
                     CountryInfoRow(country) {
                         selectedCountry = country
-                        Flows.triggerSharedFlow(country.commonName)
+                        Flows.triggerCountryFlow(country.commonName)
                         Flows.tap()
                     }
                 }

@@ -55,7 +55,7 @@ object Flows {
         }
     }
 
-    fun triggerSharedFlow(message: String) {
+    fun triggerCountryFlow(message: String) {
         GlobalScope.launch {
             _countryFlow.emit(message)
         }
