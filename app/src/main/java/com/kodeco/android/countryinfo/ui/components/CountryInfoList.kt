@@ -29,7 +29,7 @@ import com.kodeco.android.countryinfo.sample.sampleCountries
 @Composable
 fun CountryInfoList(
     countries: List<Country>,
-    onRefreshClick: () -> Unit, // TODO: Utilize this onRefreshClick
+    onRefreshClick: () -> Unit,
 ) {
     var selectedCountry: Country? by remember { mutableStateOf(null) }
     val tapCount by Flows.tapFlow.collectAsState()
@@ -45,7 +45,9 @@ fun CountryInfoList(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(text = "Taps: $tapCount", fontSize = 17.sp)
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = {
+                onRefreshClick()
+            }) {
                 Text(text = "Refresh")
             }
             Text(text = "Back: $backCount", fontSize = 17.sp)

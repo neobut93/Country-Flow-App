@@ -44,7 +44,7 @@ fun CountryInfoScreen(
     if (state == CountryInfoState.Loading) {
         LaunchedEffect(key1 = "fetch-countries") {
             getCountryInfoFlow(service)
-                .handleErrors(service)
+                .handleErrors()
                 .collect { newState ->
                     state = newState
                 }
@@ -65,12 +65,12 @@ fun CountryInfoScreenPreview() {
 
 fun getCountryInfoFlow(service: CountryService): Flow<CountryInfoState> = flow {
     val countriesResponse = service.getAllCountries()
-    delay(10000)
+    delay(5000)
     emit(
         CountryInfoState.Success(countriesResponse)
     )
 }
 
-fun <T> Flow<T>.handleErrors(service: CountryService): Flow<T> {
+fun <T> Flow<T>.handleErrors(): Flow<T> {
     return catch { e -> CountryInfoState.Error(e) }
 }
