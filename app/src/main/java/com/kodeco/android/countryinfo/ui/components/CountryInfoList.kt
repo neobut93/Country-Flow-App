@@ -3,10 +3,8 @@ package com.kodeco.android.countryinfo.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -34,6 +32,7 @@ fun CountryInfoList(
     var selectedCountry: Country? by remember { mutableStateOf(null) }
     val tapCount by Flows.tapFlow.collectAsState()
     val backCount by Flows.backFlow.collectAsState()
+    val combineNavigationCount by Flows.combineNavigationFlow.collectAsState(initial = 0)
 
     Column(
     ) {
@@ -51,6 +50,16 @@ fun CountryInfoList(
                 Text(text = "Refresh")
             }
             Text(text = "Back: $backCount", fontSize = 17.sp)
+        }
+        // Added extra row to display combine flow
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(text = "Combined navigation: $combineNavigationCount", fontSize = 17.sp)
         }
 
         selectedCountry?.let { country ->

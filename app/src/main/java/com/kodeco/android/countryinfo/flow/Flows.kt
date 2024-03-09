@@ -1,14 +1,11 @@
 package com.kodeco.android.countryinfo.flow
 
-import android.util.Log
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -21,6 +18,11 @@ object Flows {
 
     private val _counterFlow = MutableStateFlow(0)
     val counterFlow = _counterFlow.asStateFlow()
+
+    // added combine flow variable, which combines tapFlow and backFlow
+    val combineNavigationFlow = tapFlow.combine(backFlow) { tapFlow, backFlow ->
+        tapFlow + backFlow
+    }
 
     fun tap() {
         _tapFlow.value += 1
