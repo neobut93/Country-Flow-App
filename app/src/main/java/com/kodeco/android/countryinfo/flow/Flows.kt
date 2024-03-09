@@ -3,7 +3,9 @@ package com.kodeco.android.countryinfo.flow
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -22,6 +24,10 @@ object Flows {
     // added refresh flow to track how many times screen was refreshed
     private val _refreshFlow = MutableStateFlow(0)
     val refreshFlow = _refreshFlow.asStateFlow()
+
+    // added shared flow to show the toast every time when country row is tapped
+    private val _countryFlow = MutableSharedFlow<String>()
+    val countryFlow = _countryFlow.asSharedFlow()
 
     // added combine flow variable, which combines tapFlow and backFlow
     val combineNavigationFlow = tapFlow.combine(backFlow) { tapFlow, backFlow ->
@@ -46,6 +52,12 @@ object Flows {
                 delay(1_000L)
                 _counterFlow.value += 1
             }
+        }
+    }
+
+    fun triggerSharedFlow(message: String) {
+        GlobalScope.launch {
+            _countryFlow.emit(message)
         }
     }
 }
