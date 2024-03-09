@@ -32,6 +32,7 @@ fun CountryInfoList(
     var selectedCountry: Country? by remember { mutableStateOf(null) }
     val tapCount by Flows.tapFlow.collectAsState()
     val backCount by Flows.backFlow.collectAsState()
+    val refreshCount by Flows.refreshFlow.collectAsState()
     val combineNavigationCount by Flows.combineNavigationFlow.collectAsState(initial = 0)
 
     Column(
@@ -45,13 +46,15 @@ fun CountryInfoList(
         ) {
             Text(text = "Taps: $tapCount", fontSize = 17.sp)
             Button(onClick = {
+                // tracking refresh event here
+                Flows.tapRefresh()
                 onRefreshClick()
             }) {
-                Text(text = "Refresh")
+                Text(text = "Refresh: $refreshCount times")
             }
             Text(text = "Back: $backCount", fontSize = 17.sp)
         }
-        // Added extra row to display combine flow
+        // added extra row to display combine flow
         Row(
             modifier = Modifier
                 .fillMaxWidth()

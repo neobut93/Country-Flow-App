@@ -19,6 +19,10 @@ object Flows {
     private val _counterFlow = MutableStateFlow(0)
     val counterFlow = _counterFlow.asStateFlow()
 
+    // added refresh flow to track how many times screen was refreshed
+    private val _refreshFlow = MutableStateFlow(0)
+    val refreshFlow = _refreshFlow.asStateFlow()
+
     // added combine flow variable, which combines tapFlow and backFlow
     val combineNavigationFlow = tapFlow.combine(backFlow) { tapFlow, backFlow ->
         tapFlow + backFlow
@@ -30,6 +34,10 @@ object Flows {
 
     fun tapBack() {
         _backFlow.value += 1
+    }
+
+    fun tapRefresh() {
+        _refreshFlow.value += 1
     }
 
     init {
