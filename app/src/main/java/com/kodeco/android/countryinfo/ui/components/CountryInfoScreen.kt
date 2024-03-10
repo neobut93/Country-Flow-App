@@ -15,8 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import retrofit2.Response
-
+t
 sealed class CountryInfoState {
     object Loading : CountryInfoState()
     data class Success(val countries: List<Country>) : CountryInfoState()
@@ -65,7 +64,7 @@ fun CountryInfoScreenPreview() {
 
 fun getCountryInfoFlow(service: CountryService): Flow<CountryInfoState> = flow {
     val countriesResponse = service.getAllCountries()
-    delay(5000)
+    delay(3000)
     emit(
         CountryInfoState.Success(countriesResponse)
     )

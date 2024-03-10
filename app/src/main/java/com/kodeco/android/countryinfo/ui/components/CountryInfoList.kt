@@ -20,9 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kodeco.android.countryinfo.R
 import com.kodeco.android.countryinfo.flow.Flows
 import com.kodeco.android.countryinfo.models.Country
 import com.kodeco.android.countryinfo.sample.sampleCountries
@@ -52,6 +54,7 @@ fun CountryInfoList(
                 // tracking refresh event here
                 Flows.tapRefresh()
                 onRefreshClick()
+                Flows.triggerRefreshSharedFlow("The screen is refreshing currently")
             }) {
                 Text(text = "Refresh: $refreshCount times")
             }
@@ -75,7 +78,7 @@ fun CountryInfoList(
                 items(countries) { country ->
                     CountryInfoRow(country) {
                         selectedCountry = country
-                        Flows.triggerCountryFlow(country.commonName)
+                        Flows.triggerCountrySharedFlow(country.commonName)
                         Flows.tap()
                     }
                 }
@@ -84,8 +87,18 @@ fun CountryInfoList(
     }
 
     LaunchedEffect(true) {
-        Flows.countryFlow.collect { message ->
+        Flows.countrySharedFlow.collect { message ->
             Toast.makeText(context, "The $message country row was tapped", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    LaunchedEffect(true) {
+        Flows.refreshSharedFlow.collect { message ->
+            Toast.makeText(
+                context,
+                message, Toast.LENGTH_SHORT
+            )
                 .show()
         }
     }

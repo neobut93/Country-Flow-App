@@ -26,8 +26,12 @@ object Flows {
     val refreshFlow = _refreshFlow.asStateFlow()
 
     // added shared flow to show the toast every time when country row is tapped
-    private val _countryFlow = MutableSharedFlow<String>()
-    val countryFlow = _countryFlow.asSharedFlow()
+    private val _countrySharedFlow = MutableSharedFlow<String>()
+    val countrySharedFlow = _countrySharedFlow.asSharedFlow()
+
+    // added shared flow to show the toast every time when refresh button is tapped
+    private val _refreshSharedFlow = MutableSharedFlow<String>()
+    val refreshSharedFlow = _refreshSharedFlow.asSharedFlow()
 
     // added combine flow variable, which combines tapFlow and backFlow
     val combineNavigationFlow = tapFlow.combine(backFlow) { tapFlow, backFlow ->
@@ -55,9 +59,15 @@ object Flows {
         }
     }
 
-    fun triggerCountryFlow(message: String) {
+    fun triggerCountrySharedFlow(message: String) {
         GlobalScope.launch {
-            _countryFlow.emit(message)
+            _countrySharedFlow.emit(message)
+        }
+    }
+
+    fun triggerRefreshSharedFlow(message: String) {
+        GlobalScope.launch {
+            _refreshSharedFlow.emit(message)
         }
     }
 }
