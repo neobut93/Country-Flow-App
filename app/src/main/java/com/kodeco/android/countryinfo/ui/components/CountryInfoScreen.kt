@@ -15,7 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-t
+
 sealed class CountryInfoState {
     object Loading : CountryInfoState()
     data class Success(val countries: List<Country>) : CountryInfoState()
