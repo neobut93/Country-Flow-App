@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.kodeco.android.countryinfo.flow.Flows
 import com.kodeco.android.countryinfo.models.Country
 import com.kodeco.android.countryinfo.sample.sampleCountry
 
@@ -37,7 +38,7 @@ fun CountryDetailsScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        // TODO: Call in to Flows.tapBack()
+                        Flows.tapBack()
                         onNavigateUp()
                     }) {
                         Icon(
